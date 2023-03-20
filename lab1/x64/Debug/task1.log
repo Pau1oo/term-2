@@ -1,0 +1,5 @@
+﻿  functions.c
+C:\Users\bukat\Desktop\~\ОАиП\2sem\1 лаба\task1\functions.c(119,2): warning C4013: gets: нет определения; предполагается "extern" с возвратом типа "int"
+  main.c
+  Создание кода...
+  task1.vcxproj -> C:\Users\bukat\Desktop\~\ОАиП\2sem\1 лаба\task1\x64\Debug\task1.exe
