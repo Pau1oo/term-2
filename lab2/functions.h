@@ -13,4 +13,10 @@ typedef struct
 
 FILO* createStack();
 
+void push(FILO* stack, char* word);
+
+
+
+
+
 #endif //LAB2_FUNCTIONS_H
