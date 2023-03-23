@@ -21,17 +21,33 @@ char* pop(FILO* stack)
     return word;
 }
 
-void splitText(FILO* stack)
+mas* splitText(char name[])
 {
-    FILE* f = fopen("text.txt", "r");
+    FILE* f = fopen(name, "r");
+
+    fseek(f, 0, SEEK_END);
+    size_t len = ftell(f);
+    fseek(f, 0, SEEK_SET);
+
     if(f == NULL)
     {
         printf("Error opening file...\n");
-        exit(1);
+        return 0;
     }
 
-    while(!feof(f))
+    mas* array = malloc(sizeof(mas));
+    array->size = 0;
+    array->words = NULL;
+
+    char* text = malloc(len);
+    fread(text, 1, len, f);
+    fclose(f);
+
+    char* word = strtok(text, " ");
+    while(word != NULL)
     {
-        char* str = strtok()
+        array->words = realloc(array->words, (array->size + 1) * sizeof(char*));
+        array->words[array->size++] = word;
+        word = strtok(NULL, " ");
     }
 }
