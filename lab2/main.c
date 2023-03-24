@@ -2,6 +2,8 @@
 
 int main()
 {
-    FILO* stack = createStack();
+    char name[] = "text.txt";
+    compression(name);
+    return 0;
 
 }

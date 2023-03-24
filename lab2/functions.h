@@ -8,7 +8,7 @@
 typedef struct
 {
     char* word;
-    int head;
+    int freq;
     struct FILO* next;
 } FILO;
 
@@ -18,11 +18,15 @@ typedef struct
     int size;
 } mas;
 
-FILO* createStack();
+void push(FILO** head, char* word, int freq);
 
-void push(FILO* stack, char* word);
+void createStack(FILO** head, mas* divided_text);
 
 mas* splitText(char name[]);
+
+void compression(char name[]);
+
+int compare(FILO* head, char* word);
 
 
 #endif //LAB2_FUNCTIONS_H
