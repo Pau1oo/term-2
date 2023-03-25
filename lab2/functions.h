@@ -9,6 +9,7 @@ typedef struct
 {
     char* word;
     int freq;
+    int length;
     struct FILO* next;
 } FILO;
 
@@ -27,6 +28,5 @@ mas* splitText(char name[]);
 void compression(char name[]);
 
 int compare(FILO* head, char* word);
-
 
 #endif //LAB2_FUNCTIONS_H

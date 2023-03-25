@@ -18,6 +18,7 @@ void push(FILO** head, char* word, int freq)
 
     stack->word = word;
     stack->freq = freq;
+    stack->length = (int)strlen(word);
     stack->next = NULL;
 
     if(*head == NULL)
@@ -61,20 +62,128 @@ mas* splitText(char name[])
     return array;
 }
 
+void split_FILO(FILO* head, FILO** first, FILO** last)
+{
+    FILO* tmp1 = NULL;
+    FILO* tmp2 = NULL;
+
+    if(head == NULL || head->next == NULL)
+    {
+        (*first) = head;
+        (*last)  = NULL;
+        return;
+    }
+
+    tmp2 = head;
+    tmp1 = head->next;
+
+    while (tmp1!=NULL)
+    {
+        tmp1 = tmp1->next;
+        if(tmp1!=NULL)
+        {
+            tmp1 = tmp1->next;
+            tmp2 = tmp2->next;
+        }
+    }
+    (*first) = head;
+    (*last) = tmp2->next;
+    tmp2->next = NULL;
+}
+
+void merging(FILO *a, FILO *b, FILO **c)
+{
+    FILO tmp;
+    *c = NULL;
+    if (a == NULL)
+    {
+        *c = b;
+        return;
+    }
+    if (b == NULL)
+    {
+        *c = a;
+        return;
+    }
+    if (a->freq * a->length > b->freq * b->length)
+    {
+        *c = a;
+        a = a->next;
+    }
+    else
+    {
+        *c = b;
+        b = b->next;
+    }
+
+    tmp.next = *c;
+
+    while (a && b)
+    {
+        if (a->freq * a->length > b->freq * b->length)
+        {
+            (*c)->next = a;
+            a = a->next;
+        }
+        else
+        {
+            (*c)->next = b;
+            b = b->next;
+        }
+        (*c) = (*c)->next;
+    }
+    if (a)
+    {
+        while (a)
+        {
+            (*c)->next = a;
+            (*c) = (*c)->next;
+            a = a->next;
+        }
+    }
+    if (b)
+    {
+        while (b)
+        {
+            (*c)->next = b;
+            (*c) = (*c)->next;
+            b = b->next;
+        }
+    }
+    *c = tmp.next;
+}
+
+void mergeSort(FILO** head)
+{
+    FILO* first = NULL;
+    FILO* last = NULL;
+
+    if((*head == NULL) || ((*head)->next == NULL))
+        return;
+
+    split_FILO(*head, &first, &last);
+    mergeSort(&first);
+    mergeSort(&last);
+    merging(first, last, head);
+}
+
 void createStack(FILO** head, mas* divided_text)
 {
     for (int i = 0; i < divided_text->size; i++)
     {
 
-        if (compare(*head, divided_text->words[i])) continue;
-        if (strstr(divided_text->words[i], "\n") != NULL) continue;
+        if (compare(*head, divided_text->words[i]))
+            continue;
+        if (strstr(divided_text->words[i], "\n") != NULL)
+            continue;
 
         int freq = 0;
         for (int j = 0; j < divided_text->size; j++)
             if (strcmp(divided_text->words[i], divided_text->words[j]) == 0)
                 freq++;
-        push(&(*head), divided_text->words[i], freq);
+        push(head, divided_text->words[i], freq);
     }
+    mergeSort(head);
 }
 
 int compare(FILO* head, char* word)
@@ -105,4 +214,8 @@ void compression(char name[])
     fseek(f, 0, SEEK_SET);
     printf("Initial size: %ld\n", size);
     printf("Splitting...\n");
+
+    FILO* head = NULL;
+
+    createStack(&head, dividedText);
 }
