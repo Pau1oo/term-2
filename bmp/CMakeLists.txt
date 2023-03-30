@@ -3,4 +3,4 @@ project(bmp C)
 
 set(CMAKE_C_STANDARD 99)
 
-add_executable(bmp main.c)
+add_executable(bmp main.c functions.c functions.h)
