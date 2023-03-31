@@ -11,7 +11,7 @@
 # =============================================================================
 
 # =============================================================================
-# Project: analogOfAkinator
+# Project: untitled
 # Configurations: Debug
 # =============================================================================
 
@@ -39,52 +39,52 @@ include CMakeFiles/rules.ninja
 #############################################
 # Logical path to working directory; prefix for absolute paths.
 
-cmake_ninja_workdir = C$:/Users/bukat/Projects/analogOfAkinator/cmake-build-debug/
+cmake_ninja_workdir = C$:/Users/bukat/Projects/untitled/cmake-build-debug/
 # =============================================================================
-# Object build statements for EXECUTABLE target analogOfAkinator
+# Object build statements for EXECUTABLE target untitled
 
 
 #############################################
-# Order-only phony target for analogOfAkinator
+# Order-only phony target for untitled
 
-build cmake_object_order_depends_target_analogOfAkinator: phony || CMakeFiles/analogOfAkinator.dir
+build cmake_object_order_depends_target_untitled: phony || CMakeFiles/untitled.dir
 
-build CMakeFiles/analogOfAkinator.dir/main.c.obj: C_COMPILER__analogOfAkinator_Debug C$:/Users/bukat/Projects/analogOfAkinator/main.c || cmake_object_order_depends_target_analogOfAkinator
-  DEP_FILE = CMakeFiles\analogOfAkinator.dir\main.c.obj.d
+build CMakeFiles/untitled.dir/main.c.obj: C_COMPILER__untitled_Debug C$:/Users/bukat/Projects/untitled/main.c || cmake_object_order_depends_target_untitled
+  DEP_FILE = CMakeFiles\untitled.dir\main.c.obj.d
   FLAGS = -g -std=gnu99
-  OBJECT_DIR = CMakeFiles\analogOfAkinator.dir
-  OBJECT_FILE_DIR = CMakeFiles\analogOfAkinator.dir
+  OBJECT_DIR = CMakeFiles\untitled.dir
+  OBJECT_FILE_DIR = CMakeFiles\untitled.dir
 
-build CMakeFiles/analogOfAkinator.dir/functions.c.obj: C_COMPILER__analogOfAkinator_Debug C$:/Users/bukat/Projects/analogOfAkinator/functions.c || cmake_object_order_depends_target_analogOfAkinator
-  DEP_FILE = CMakeFiles\analogOfAkinator.dir\functions.c.obj.d
+build CMakeFiles/untitled.dir/functions.c.obj: C_COMPILER__untitled_Debug C$:/Users/bukat/Projects/untitled/functions.c || cmake_object_order_depends_target_untitled
+  DEP_FILE = CMakeFiles\untitled.dir\functions.c.obj.d
   FLAGS = -g -std=gnu99
-  OBJECT_DIR = CMakeFiles\analogOfAkinator.dir
-  OBJECT_FILE_DIR = CMakeFiles\analogOfAkinator.dir
+  OBJECT_DIR = CMakeFiles\untitled.dir
+  OBJECT_FILE_DIR = CMakeFiles\untitled.dir
 
 
 # =============================================================================
-# Link build statements for EXECUTABLE target analogOfAkinator
+# Link build statements for EXECUTABLE target untitled
 
 
 #############################################
-# Link the executable analogOfAkinator.exe
+# Link the executable untitled.exe
 
-build analogOfAkinator.exe: C_EXECUTABLE_LINKER__analogOfAkinator_Debug CMakeFiles/analogOfAkinator.dir/main.c.obj CMakeFiles/analogOfAkinator.dir/functions.c.obj
+build untitled.exe: C_EXECUTABLE_LINKER__untitled_Debug CMakeFiles/untitled.dir/main.c.obj CMakeFiles/untitled.dir/functions.c.obj
   FLAGS = -g
   LINK_LIBRARIES = -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
-  OBJECT_DIR = CMakeFiles\analogOfAkinator.dir
+  OBJECT_DIR = CMakeFiles\untitled.dir
   POST_BUILD = cd .
   PRE_LINK = cd .
-  TARGET_FILE = analogOfAkinator.exe
-  TARGET_IMPLIB = libanalogOfAkinator.dll.a
-  TARGET_PDB = analogOfAkinator.exe.dbg
+  TARGET_FILE = untitled.exe
+  TARGET_IMPLIB = libuntitled.dll.a
+  TARGET_PDB = untitled.exe.dbg
 
 
 #############################################
 # Utility command for edit_cache
 
 build CMakeFiles/edit_cache.util: CUSTOM_COMMAND
-  COMMAND = cmd.exe /C "cd /D C:\Users\bukat\Projects\analogOfAkinator\cmake-build-debug && "D:\CLion 2022.2.4\bin\cmake\win\bin\cmake.exe" -E echo "No interactive CMake dialog available.""
+  COMMAND = cmd.exe /C "cd /D C:\Users\bukat\Projects\untitled\cmake-build-debug && "D:\CLion 2022.2.4\bin\cmake\win\bin\cmake.exe" -E echo "No interactive CMake dialog available.""
   DESC = No interactive CMake dialog available...
   restat = 1
 
@@ -95,7 +95,7 @@ build edit_cache: phony CMakeFiles/edit_cache.util
 # Utility command for rebuild_cache
 
 build CMakeFiles/rebuild_cache.util: CUSTOM_COMMAND
-  COMMAND = cmd.exe /C "cd /D C:\Users\bukat\Projects\analogOfAkinator\cmake-build-debug && "D:\CLion 2022.2.4\bin\cmake\win\bin\cmake.exe" --regenerate-during-build -SC:\Users\bukat\Projects\analogOfAkinator -BC:\Users\bukat\Projects\analogOfAkinator\cmake-build-debug"
+  COMMAND = cmd.exe /C "cd /D C:\Users\bukat\Projects\untitled\cmake-build-debug && "D:\CLion 2022.2.4\bin\cmake\win\bin\cmake.exe" --regenerate-during-build -SC:\Users\bukat\Projects\untitled -BC:\Users\bukat\Projects\untitled\cmake-build-debug"
   DESC = Running CMake to regenerate build system...
   pool = console
   restat = 1
@@ -105,7 +105,7 @@ build rebuild_cache: phony CMakeFiles/rebuild_cache.util
 # =============================================================================
 # Target aliases.
 
-build analogOfAkinator: phony analogOfAkinator.exe
+build untitled: phony untitled.exe
 
 # =============================================================================
 # Folder targets.
@@ -113,9 +113,9 @@ build analogOfAkinator: phony analogOfAkinator.exe
 # =============================================================================
 
 #############################################
-# Folder: C:/Users/bukat/Projects/analogOfAkinator/cmake-build-debug
+# Folder: C:/Users/bukat/Projects/untitled/cmake-build-debug
 
-build all: phony analogOfAkinator.exe
+build all: phony untitled.exe
 
 # =============================================================================
 # Built-in targets
