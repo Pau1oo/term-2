@@ -2,10 +2,10 @@
 	"artifacts" : 
 	[
 		{
-			"path" : "untitled.exe"
+			"path" : "analogOfAkinator.exe"
 		},
 		{
-			"path" : "untitled.pdb"
+			"path" : "analogOfAkinator.pdb"
 		}
 	],
 	"backtrace" : 1,
@@ -60,7 +60,7 @@
 			]
 		}
 	],
-	"id" : "untitled::@6890427a1f51a3e7e1df",
+	"id" : "analogOfAkinator::@6890427a1f51a3e7e1df",
 	"link" : 
 	{
 		"commandFragments" : 
@@ -80,8 +80,8 @@
 		],
 		"language" : "C"
 	},
-	"name" : "untitled",
-	"nameOnDisk" : "untitled.exe",
+	"name" : "analogOfAkinator",
+	"nameOnDisk" : "analogOfAkinator.exe",
 	"paths" : 
 	{
 		"build" : ".",
