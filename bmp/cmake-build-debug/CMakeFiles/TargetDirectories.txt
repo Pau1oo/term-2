@@ -1,3 +1,0 @@
-C:/Users/bukat/Projects/bmp/cmake-build-debug/CMakeFiles/bmp.dir
-C:/Users/bukat/Projects/bmp/cmake-build-debug/CMakeFiles/edit_cache.dir
-C:/Users/bukat/Projects/bmp/cmake-build-debug/CMakeFiles/rebuild_cache.dir

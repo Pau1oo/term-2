@@ -33,9 +33,9 @@ void push(FILO** head, char* word, int freq)
 
 mas* splitText(char name[])
 {
-    FILE* f = fopen(name, "r");
+    FILE* f = fopen(name, "rb");
 
-    fseek(f, 0, SEEK_END);
+    fseek(f, 0L, SEEK_END);
     long len = ftell(f);
     fseek(f, 0, SEEK_SET);
 
@@ -247,7 +247,7 @@ void replaceWords(FILO* head, mas* dividedText)
 {
     FILO* first = head;
 
-    fclose(fopen("replacement.txt", "w"));
+    fclose(fopen("replacement.txt", "wb"));
 
     while(first)
     {
@@ -305,7 +305,7 @@ void compression(char name[])
 
     FILE* f = fopen(name, "rb");
 
-    fseek(f, 0, SEEK_END);
+    fseek(f, 0L, SEEK_END);
     long size = ftell(f);
     fseek(f, 0, SEEK_SET);
 
@@ -327,17 +327,17 @@ void compression(char name[])
     for (int i = 0; i < dividedText->size; ++i)
     {
         fputs(dividedText->words[i], f);
-        if(i != dividedText->size - 1)
+        if(i != dividedText->size)
             fputs(" ", f);
     }
 
-    fseek(f, 0, SEEK_END);
+    fseek(f, 0L, SEEK_END);
     size = ftell(f);
     printf("Compressed size: %ld\n", size);
 
     fclose(f);
     f = fopen("replacement.txt", "rb");
-    fseek(f, 0, SEEK_END);
+    fseek(f, 0L, SEEK_END);
     long replacement_size = ftell(f);
     fclose(f);
 

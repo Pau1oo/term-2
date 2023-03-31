@@ -2,7 +2,7 @@
 
 mas* splitText(char name[])
 {
-    FILE* f = fopen(name, "r");
+    FILE* f = fopen(name, "rb");
 
     fseek(f, 0, SEEK_END);
     long len = ftell(f);
@@ -126,7 +126,7 @@ void decompression()
         swap(compressedText, word->words[0], word->words[1]);
     }
 
-    fclose(fopen("decompressed.txt", "w"));
+    fclose(fopen("decompressed.txt", "wb"));
 
     f = fopen("decompressed.txt", "ab");
     if(f == NULL)
@@ -135,7 +135,7 @@ void decompression()
     for (int i = 0; i < compressedText->size; ++i)
     {
         fputs(compressedText->words[i], f);
-        if(i != compressedText->size - 1)
+        if(i != compressedText->size)
             fputs(" ", f);
     }
 
