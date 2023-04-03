@@ -1,0 +1,6 @@
+#ifndef LAB3_FUNCTIONS_H
+#define LAB3_FUNCTIONS_H
+
+
+
+#endif //LAB3_FUNCTIONS_H
