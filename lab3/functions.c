@@ -38,12 +38,23 @@ void menu()
     } while(choice <= 4 && choice >= 0);
 }
 
-void readHeader(char* file, BITMAPFILEHEADER* fileHeader, BITMAPINFOHEADER* infoHeader)
+BITMAPFILEHEADER* readFileHeader(char* file)
 {
     FILE* f = fopen(file, "rb");
+    BITMAPFILEHEADER *fileHeader = NULL;
     fread(fileHeader, sizeof(*fileHeader), 1, f);
+    fclose(f);
+    return fileHeader;
+}
+
+BITMAPINFOHEADER* readInfoHeader(char* file)
+{
+    FILE* f = fopen(file, "rb");
+    BITMAPINFOHEADER* infoHeader = NULL;
+    fseek(f, 0, 14);
     fread(infoHeader, sizeof(*infoHeader), 1, f);
     fclose(f);
+    return infoHeader;
 }
 
 PIXEL** readPixels(char* file, BITMAPINFOHEADER infoHeader)

@@ -39,7 +39,9 @@ typedef struct
     uint8_t RED;
 } PIXEL;
 
-void readHeader(char* file, BITMAPFILEHEADER* fileHeader, BITMAPINFOHEADER* infoHeader);
+BITMAPFILEHEADER* readFileHeader(char* file);
+
+BITMAPINFOHEADER* readInfoHeader(char* file);
 
 PIXEL** readPixels(char* file, BITMAPINFOHEADER infoHeader);
 
