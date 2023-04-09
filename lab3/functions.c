@@ -1,16 +1,57 @@
 #include "functions.h"
 
+void displayMenu()
+{
+    printf("[1] Negative\n");
+    printf("[2] Black and white\n");
+    printf("[3] Median filtering\n");
+    printf("[4] Gamma-correction\n");
+    printf("[0] Exit\n");
+}
+
+void menu()
+{
+    int choice;
+    do {
+        displayMenu();
+        scanf_s("%d", &choice);
+        switch(choice)
+        {
+            case 1:
+                //
+                break;
+            case 2:
+                //
+                break;
+            case 3:
+                //
+                break;
+            case 4:
+                //
+                break;
+            case 0:
+                exit(0);
+            default:
+                printf("Invalid choice.\n");
+                break;
+        }
+    } while(choice <= 4 && choice >= 0);
+}
+
 void readHeader(char* file, BITMAPFILEHEADER* fileHeader, BITMAPINFOHEADER* infoHeader)
 {
     FILE* f = fopen(file, "rb");
     fread(fileHeader, sizeof(*fileHeader), 1, f);
     fread(infoHeader, sizeof(*infoHeader), 1, f);
+    fclose(f);
 }
 
-PIXEL** readPixels(FILE* f, BITMAPINFOHEADER infoHeader)
+PIXEL** readPixels(char* file, BITMAPINFOHEADER infoHeader)
 {
     PIXEL** rgb = NULL;
+    FILE* f = fopen(file, "rb");
     unsigned long long padding = (4 - (infoHeader.biWidth * sizeof(PIXEL)) % 4) % 4;
+    fseek(f, 0, 54);
 
     for(int i = 0; i < infoHeader.biHeight; i++)
     {
@@ -22,5 +63,6 @@ PIXEL** readPixels(FILE* f, BITMAPINFOHEADER infoHeader)
             fseek(f, (long)padding, SEEK_CUR);
         }
     }
+    fclose(f);
     return rgb;
 }

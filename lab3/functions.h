@@ -41,6 +41,10 @@ typedef struct
 
 void readHeader(char* file, BITMAPFILEHEADER* fileHeader, BITMAPINFOHEADER* infoHeader);
 
-PIXEL** readPixels(FILE* f, BITMAPINFOHEADER infoHeader);
+PIXEL** readPixels(char* file, BITMAPINFOHEADER infoHeader);
+
+void displayMenu();
+
+void menu();
 
 #endif //LAB3_FUNCTIONS_H
