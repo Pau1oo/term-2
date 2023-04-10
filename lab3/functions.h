@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdint.h>
+#include <string.h>
 
 #pragma pack(push, 1)
 
@@ -30,8 +31,6 @@ typedef struct
     uint32_t biClrImportant;    // количество значимых цветов в палитре
 } BITMAPINFOHEADER;
 
-#pragma pack(pop)
-
 typedef struct
 {
     uint8_t BLUE;
@@ -39,14 +38,18 @@ typedef struct
     uint8_t RED;
 } PIXEL;
 
-BITMAPFILEHEADER* readFileHeader(char* file);
+#pragma pack(pop)
 
-BITMAPINFOHEADER* readInfoHeader(char* file);
+BITMAPFILEHEADER* readFileHeader(char* fileName);
 
-PIXEL** readPixels(char* file, BITMAPINFOHEADER infoHeader);
+BITMAPINFOHEADER* readInfoHeader(char* fileName);
+
+PIXEL** readPixels(char* fileName, BITMAPINFOHEADER infoHeader);
 
 void displayMenu();
 
 void menu();
+
+void verify(char* fileName);
 
 #endif //LAB3_FUNCTIONS_H

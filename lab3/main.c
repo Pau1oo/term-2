@@ -1,17 +1,13 @@
 #include "functions.h"
 
-int main(int argc, char* argv[])
+int main()
 {
-    if(argc != 2)
-    {
-        printf("Invalid input!\n");
-        exit(1);
-    }
-
-    BITMAPFILEHEADER* fileHeader = NULL;
-    BITMAPINFOHEADER* infoHeader = NULL;
-    readFileHeader(argv[1]);
-    readInfoHeader(argv[1]);
-    readPixels(argv[1], *infoHeader);
+    char fileName[15];
+    printf("Input the file name(.bmp):\n");
+    gets(fileName);
+    verify(fileName);
+    BITMAPFILEHEADER* fileHeader = readFileHeader(fileName);
+    BITMAPINFOHEADER* infoHeader = readInfoHeader(fileName);
+    PIXEL** rgb = readPixels(fileName, *infoHeader);
     menu();
 }

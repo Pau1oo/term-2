@@ -1,5 +1,16 @@
 #include "functions.h"
 
+void verify(char* fileName)
+{
+    const char* point = strrchr(fileName, '.');
+    if(strcmp(point, ".bmp") != 0)
+    {
+        printf("This is not a BMP file\n");
+        getchar();
+        exit(0);
+    }
+}
+
 void displayMenu()
 {
     printf("[1] Negative\n");
@@ -11,62 +22,91 @@ void displayMenu()
 
 void menu()
 {
-    int choice;
-    do {
+    while (1)
+    {
+        int choice;
+        system("cls");
         displayMenu();
-        scanf_s("%d", &choice);
-        switch(choice)
+        while (!scanf_s("%d", &choice) || choice > 4 || choice < 0 || getchar() != '\n')
         {
-            case 1:
-                //
-                break;
-            case 2:
-                //
-                break;
-            case 3:
-                //
-                break;
-            case 4:
-                //
-                break;
-            case 0:
-                exit(0);
-            default:
-                printf("Invalid choice.\n");
-                break;
+            system("cls");
+            printf("Invalid choice!\n");
+            printf("Choose again!\n");
+            printf("\n");
+            displayMenu();
+            rewind(stdin);
         }
-    } while(choice <= 4 && choice >= 0);
+
+        if (choice == 0) exit(0);
+
+        else if
+                (choice == 1) printf("1");
+
+        else if
+                (choice == 2) printf("2");
+
+        else if
+                (choice == 3) printf("3");
+
+        else if
+                (choice == 4) printf("4");
+
+        printf("\n");
+    }
 }
 
-BITMAPFILEHEADER* readFileHeader(char* file)
+BITMAPFILEHEADER* readFileHeader(char* fileName)
 {
-    FILE* f = fopen(file, "rb");
-    BITMAPFILEHEADER *fileHeader = NULL;
-    fread(fileHeader, sizeof(*fileHeader), 1, f);
+    FILE* f = fopen(fileName, "rb");
+    if(f == NULL)
+    {
+        printf("Error opening file\n");
+        fclose(f);
+        return NULL;
+    }
+
+    BITMAPFILEHEADER *fileHeader = (BITMAPFILEHEADER*)malloc(sizeof(BITMAPFILEHEADER));
+    fread(fileHeader, sizeof(BITMAPFILEHEADER), 1, f);
     fclose(f);
     return fileHeader;
 }
 
-BITMAPINFOHEADER* readInfoHeader(char* file)
+BITMAPINFOHEADER* readInfoHeader(char* fileName)
 {
-    FILE* f = fopen(file, "rb");
-    BITMAPINFOHEADER* infoHeader = NULL;
-    fseek(f, 0, 14);
-    fread(infoHeader, sizeof(*infoHeader), 1, f);
+    FILE* f = fopen(fileName, "rb");
+    if(f == NULL)
+    {
+        printf("Error opening file\n");
+        fclose(f);
+        return NULL;
+    }
+
+    BITMAPINFOHEADER* infoHeader = (BITMAPINFOHEADER*)malloc(sizeof(BITMAPINFOHEADER));
+    fseek(f, 14, SEEK_SET);
+    fread(infoHeader, sizeof(BITMAPINFOHEADER), 1, f);
     fclose(f);
     return infoHeader;
 }
 
-PIXEL** readPixels(char* file, BITMAPINFOHEADER infoHeader)
+PIXEL** readPixels(char* fileName, BITMAPINFOHEADER infoHeader)
 {
-    PIXEL** rgb = NULL;
-    FILE* f = fopen(file, "rb");
+    PIXEL** rgb = malloc(sizeof(PIXEL*) * infoHeader.biHeight);
+
+    FILE* f = fopen(fileName, "rb");
+    if(f == NULL)
+    {
+        printf("Error opening file\n");
+        fclose(f);
+        return NULL;
+    }
+
     unsigned long long padding = (4 - (infoHeader.biWidth * sizeof(PIXEL)) % 4) % 4;
-    fseek(f, 0, 54);
+    fseek(f, 54, SEEK_SET);
 
     for(int i = 0; i < infoHeader.biHeight; i++)
     {
-        for(int j = 0; i < infoHeader.biWidth; j++)
+        rgb[i] = malloc(sizeof(PIXEL) * infoHeader.biWidth);
+        for(int j = 0; j < infoHeader.biWidth; j++)
         {
             rgb[i][j].BLUE = getc(f);
             rgb[i][j].GREEN = getc(f);
