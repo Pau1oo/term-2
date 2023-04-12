@@ -20,39 +20,21 @@ void displayMenu()
     printf("[0] Exit\n");
 }
 
-void menu()
+int menu()
 {
-    while (1)
+    int choice;
+    system("cls");
+    displayMenu();
+    while (!scanf_s("%d", &choice) || choice > 4 || choice < 0 || getchar() != '\n')
     {
-        int choice;
         system("cls");
-        displayMenu();
-        while (!scanf_s("%d", &choice) || choice > 4 || choice < 0 || getchar() != '\n')
-        {
-            system("cls");
-            printf("Invalid choice!\n");
-            printf("Choose again!\n");
-            printf("\n");
-            displayMenu();
-            rewind(stdin);
-        }
-
-        if (choice == 0) exit(0);
-
-        else if
-                (choice == 1) printf("1");
-
-        else if
-                (choice == 2) printf("2");
-
-        else if
-                (choice == 3) printf("3");
-
-        else if
-                (choice == 4) printf("4");
-
+        printf("Invalid choice!\n");
+        printf("Choose again!\n");
         printf("\n");
+        displayMenu();
+        rewind(stdin);
     }
+    return choice;
 }
 
 BITMAPFILEHEADER* readFileHeader(char* fileName)
@@ -116,4 +98,34 @@ PIXEL** readPixels(char* fileName, BITMAPINFOHEADER infoHeader)
     }
     fclose(f);
     return rgb;
+}
+
+void negative(PIXEL** rgb, BITMAPINFOHEADER infoHeader, BITMAPFILEHEADER fileHeader)
+{
+    PIXEL** newRGB = malloc(sizeof(PIXEL*) * infoHeader.biHeight);
+    unsigned long long padding = (4 - (infoHeader.biWidth * sizeof(PIXEL)) % 4) % 4;
+    unsigned long long paddingSize = padding * sizeof(unsigned char);
+
+    for(int i = 0; i < infoHeader.biHeight; i++)
+    {
+        newRGB[i] = malloc(sizeof(PIXEL) * infoHeader.biWidth);
+        for(int j = 0; j < infoHeader.biWidth; j++)
+        {
+            newRGB[i][j].BLUE = 255 - rgb[i][j].BLUE;
+            newRGB[i][j].GREEN = 255 - rgb[i][j].GREEN;
+            newRGB[i][j].RED = 255 - rgb[i][j].RED;
+        }
+    }
+
+    FILE* outputFile = fopen("negative.bmp", "wb");
+    fwrite(&fileHeader, sizeof(fileHeader), 1, outputFile);
+    fwrite(&infoHeader, sizeof(infoHeader), 1, outputFile);
+
+    for(int i = 0; i < infoHeader.biHeight; i++)
+    {
+        fwrite(newRGB[i], sizeof(PIXEL), infoHeader.biWidth, outputFile);
+        fwrite(0, paddingSize, 1, outputFile);
+    }
+
+    fclose(outputFile);
 }

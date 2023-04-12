@@ -9,5 +9,25 @@ int main()
     BITMAPFILEHEADER* fileHeader = readFileHeader(fileName);
     BITMAPINFOHEADER* infoHeader = readInfoHeader(fileName);
     PIXEL** rgb = readPixels(fileName, *infoHeader);
-    menu();
+
+    while(1)
+    {
+        int choice = menu();
+
+        if (choice == 0) exit(0);
+
+        else if
+                (choice == 1) negative(rgb, *infoHeader, *fileHeader);
+
+        else if
+                (choice == 2) printf("2");
+
+        else if
+                (choice == 3) printf("3");
+
+        else if
+                (choice == 4) printf("4");
+
+        printf("\n");
+    }
 }
