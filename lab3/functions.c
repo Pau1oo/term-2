@@ -160,3 +160,39 @@ void BnW(PIXEL** rgb, BITMAPINFOHEADER infoHeader, BITMAPFILEHEADER fileHeader)
 
     fclose(outputFile);
 }
+
+void gammaCorrection(PIXEL** rgb, BITMAPINFOHEADER infoHeader, BITMAPFILEHEADER fileHeader)
+{
+    PIXEL** newRGB = malloc(sizeof(PIXEL*) * infoHeader.biHeight);
+    unsigned long long padding = (4 - (infoHeader.biWidth * sizeof(PIXEL)) % 4) % 4;
+    unsigned long long paddingSize = padding * sizeof(unsigned char);
+    float gamma;
+    printf("Input the gamma coefficient:\n");
+    scanf_s("%f", &gamma);
+
+    for(int i = 0; i < infoHeader.biHeight; i++)
+    {
+        newRGB[i] = malloc(sizeof(PIXEL) * infoHeader.biWidth);
+        for(int j = 0; j < infoHeader.biWidth; j++)
+        {
+            float blueValue = (float)rgb[i][j].BLUE / 255;
+            float greenValue = (float)rgb[i][j].GREEN / 255;
+            float redValue = (float)rgb[i][j].RED / 255;
+            newRGB[i][j].BLUE = (uint8_t)(powf(blueValue, gamma) * 255);
+            newRGB[i][j].GREEN = (uint8_t)(powf(greenValue, gamma) * 255);
+            newRGB[i][j].RED = (uint8_t)(powf(redValue, gamma) * 255);
+        }
+    }
+
+    FILE* outputFile = fopen("gamma.bmp", "wb");
+    fwrite(&fileHeader, sizeof(fileHeader), 1, outputFile);
+    fwrite(&infoHeader, sizeof(infoHeader), 1, outputFile);
+
+    for(int i = 0; i < infoHeader.biHeight; i++)
+    {
+        fwrite(newRGB[i], sizeof(PIXEL), infoHeader.biWidth, outputFile);
+        fwrite(0, paddingSize, 1, outputFile);
+    }
+
+    fclose(outputFile);
+}

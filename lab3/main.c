@@ -26,7 +26,7 @@ int main()
                 (choice == 3) printf("3");
 
         else if
-                (choice == 4) printf("4");
+                (choice == 4) gammaCorrection(rgb, *infoHeader, *fileHeader);
 
         printf("\n");
     }
