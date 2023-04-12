@@ -129,3 +129,34 @@ void negative(PIXEL** rgb, BITMAPINFOHEADER infoHeader, BITMAPFILEHEADER fileHea
 
     fclose(outputFile);
 }
+
+void BnW(PIXEL** rgb, BITMAPINFOHEADER infoHeader, BITMAPFILEHEADER fileHeader)
+{
+    PIXEL** newRGB = malloc(sizeof(PIXEL*) * infoHeader.biHeight);
+    unsigned long long padding = (4 - (infoHeader.biWidth * sizeof(PIXEL)) % 4) % 4;
+    unsigned long long paddingSize = padding * sizeof(unsigned char);
+
+    for(int i = 0; i < infoHeader.biHeight; i++)
+    {
+        newRGB[i] = malloc(sizeof(PIXEL) * infoHeader.biWidth);
+        for(int j = 0; j < infoHeader.biWidth; j++)
+        {
+            int average = (rgb[i][j].BLUE + rgb[i][j].GREEN + rgb[i][j].RED) / 3;
+            newRGB[i][j].BLUE = average;
+            newRGB[i][j].GREEN = average;
+            newRGB[i][j].RED = average;
+        }
+    }
+
+    FILE* outputFile = fopen("black&white.bmp", "wb");
+    fwrite(&fileHeader, sizeof(fileHeader), 1, outputFile);
+    fwrite(&infoHeader, sizeof(infoHeader), 1, outputFile);
+
+    for(int i = 0; i < infoHeader.biHeight; i++)
+    {
+        fwrite(newRGB[i], sizeof(PIXEL), infoHeader.biWidth, outputFile);
+        fwrite(0, paddingSize, 1, outputFile);
+    }
+
+    fclose(outputFile);
+}

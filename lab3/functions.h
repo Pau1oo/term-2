@@ -54,4 +54,6 @@ void verify(char* fileName);
 
 void negative(PIXEL** rgb, BITMAPINFOHEADER infoHeader, BITMAPFILEHEADER fileHeader);
 
+void BnW(PIXEL** rgb, BITMAPINFOHEADER infoHeader, BITMAPFILEHEADER fileHeader);
+
 #endif //LAB3_FUNCTIONS_H

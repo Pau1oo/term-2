@@ -20,7 +20,7 @@ int main()
                 (choice == 1) negative(rgb, *infoHeader, *fileHeader);
 
         else if
-                (choice == 2) printf("2");
+                (choice == 2) BnW(rgb, *infoHeader, *fileHeader);
 
         else if
                 (choice == 3) printf("3");
