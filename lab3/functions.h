@@ -57,6 +57,8 @@ void negative(PIXEL** rgb, BITMAPINFOHEADER infoHeader, BITMAPFILEHEADER fileHea
 
 void BnW(PIXEL** rgb, BITMAPINFOHEADER infoHeader, BITMAPFILEHEADER fileHeader);
 
+void medianFiltering(PIXEL** rgb, BITMAPINFOHEADER infoHeader, BITMAPFILEHEADER fileHeader);
+
 void gammaCorrection(PIXEL** rgb, BITMAPINFOHEADER infoHeader, BITMAPFILEHEADER fileHeader);
 
 #endif //LAB3_FUNCTIONS_H

@@ -128,6 +128,7 @@ void negative(PIXEL** rgb, BITMAPINFOHEADER infoHeader, BITMAPFILEHEADER fileHea
     }
 
     fclose(outputFile);
+    free(newRGB);
 }
 
 void BnW(PIXEL** rgb, BITMAPINFOHEADER infoHeader, BITMAPFILEHEADER fileHeader)
@@ -159,6 +160,81 @@ void BnW(PIXEL** rgb, BITMAPINFOHEADER infoHeader, BITMAPFILEHEADER fileHeader)
     }
 
     fclose(outputFile);
+    free(newRGB);
+}
+
+void medianFiltering(PIXEL** rgb, BITMAPINFOHEADER infoHeader, BITMAPFILEHEADER fileHeader)
+{
+    PIXEL** newRGB = malloc(sizeof(PIXEL*) * infoHeader.biHeight);
+    unsigned long long padding = (4 - (infoHeader.biWidth * sizeof(PIXEL)) % 4) % 4;
+    unsigned long long paddingSize = padding * sizeof(unsigned char);
+
+    for(int i = 0; i < infoHeader.biHeight; i++)
+    {
+        newRGB[i] = malloc(sizeof(PIXEL) * infoHeader.biWidth);
+        for(int j = 0; j < infoHeader.biWidth; j++)
+        {
+            newRGB[i][j].BLUE = rgb[i][j].BLUE;
+            newRGB[i][j].GREEN = rgb[i][j].GREEN;
+            newRGB[i][j].RED = rgb[i][j].RED;
+        }
+    }
+
+    int windowSize;
+    printf("Input the size of window:\n");
+    scanf_s("%d", &windowSize);
+    int windowR = windowSize / 2;
+    windowSize = windowSize * windowSize;
+    PIXEL* window = malloc(sizeof(PIXEL) * windowSize);
+
+    for(int y = 0; y < infoHeader.biHeight; y++)
+    {
+        for(int x = 0; x < infoHeader.biWidth; x++)
+        {
+            int windowIndex = 0;
+            for (int j = -windowR; j <= windowR; j++)
+            {
+                for (int i = -windowR; i <= windowR; i++)
+                {
+                    int cur_x = x + i;
+                    int cur_y = y + j;
+                    if (cur_x >= 0 && cur_x < infoHeader.biWidth && cur_y >= 0 && cur_y < infoHeader.biHeight)
+                        window[windowIndex++] = rgb[cur_y][cur_x];
+                }
+            }
+
+            for (int i = 0; i < windowSize - 1; i++)
+            {
+                for (int j = i + 1; j < windowSize; j++)
+                {
+                    uint16_t brightness_i = window[i].RED + window[i].GREEN + window[i].BLUE;
+                    uint16_t brightness_j = window[j].RED + window[j].GREEN + window[j].BLUE;
+                    if (brightness_i > brightness_j)
+                    {
+                        PIXEL temp = window[i];
+                        window[i] = window[j];
+                        window[j] = temp;
+                    }
+                }
+            }
+
+            int medianIndex = windowSize / 2;
+            newRGB[y][x] = window[medianIndex];
+        }
+    }
+
+    FILE* outputFile = fopen("median.bmp", "wb");
+    fwrite(&fileHeader, sizeof(fileHeader), 1, outputFile);
+    fwrite(&infoHeader, sizeof(infoHeader), 1, outputFile);
+
+    for(int i = 0; i < infoHeader.biHeight; i++)
+    {
+        fwrite(newRGB[i], sizeof(PIXEL), infoHeader.biWidth, outputFile);
+        fwrite(0, paddingSize, 1, outputFile);
+    }
+
+    fclose(outputFile);
+    free(newRGB);
 }
 
 void gammaCorrection(PIXEL** rgb, BITMAPINFOHEADER infoHeader, BITMAPFILEHEADER fileHeader)
@@ -195,4 +271,5 @@ void gammaCorrection(PIXEL** rgb, BITMAPINFOHEADER infoHeader, BITMAPFILEHEADER 
     }
 
     fclose(outputFile);
+    free(newRGB);
 }

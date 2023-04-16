@@ -23,7 +23,7 @@ int main()
                 (choice == 2) BnW(rgb, *infoHeader, *fileHeader);
 
         else if
-                (choice == 3) printf("3");
+                (choice == 3) medianFiltering(rgb, *infoHeader, *fileHeader);
 
         else if
                 (choice == 4) gammaCorrection(rgb, *infoHeader, *fileHeader);
