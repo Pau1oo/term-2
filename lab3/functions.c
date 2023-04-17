@@ -104,7 +104,6 @@ void negative(PIXEL** rgb, BITMAPINFOHEADER infoHeader, BITMAPFILEHEADER fileHea
 {
     PIXEL** newRGB = malloc(sizeof(PIXEL*) * infoHeader.biHeight);
     unsigned long long padding = (4 - (infoHeader.biWidth * sizeof(PIXEL)) % 4) % 4;
-    unsigned long long paddingSize = padding * sizeof(unsigned char);
 
     for(int i = 0; i < infoHeader.biHeight; i++)
     {
@@ -124,7 +123,7 @@ void negative(PIXEL** rgb, BITMAPINFOHEADER infoHeader, BITMAPFILEHEADER fileHea
     for(int i = 0; i < infoHeader.biHeight; i++)
     {
         fwrite(newRGB[i], sizeof(PIXEL), infoHeader.biWidth, outputFile);
-        fwrite(0, paddingSize, 1, outputFile);
+        fwrite(0, padding, 1, outputFile);
     }
 
     fclose(outputFile);
@@ -135,7 +134,6 @@ void BnW(PIXEL** rgb, BITMAPINFOHEADER infoHeader, BITMAPFILEHEADER fileHeader)
 {
     PIXEL** newRGB = malloc(sizeof(PIXEL*) * infoHeader.biHeight);
     unsigned long long padding = (4 - (infoHeader.biWidth * sizeof(PIXEL)) % 4) % 4;
-    unsigned long long paddingSize = padding * sizeof(unsigned char);
 
     for(int i = 0; i < infoHeader.biHeight; i++)
     {
@@ -156,7 +154,7 @@ void BnW(PIXEL** rgb, BITMAPINFOHEADER infoHeader, BITMAPFILEHEADER fileHeader)
     for(int i = 0; i < infoHeader.biHeight; i++)
     {
         fwrite(newRGB[i], sizeof(PIXEL), infoHeader.biWidth, outputFile);
-        fwrite(0, paddingSize, 1, outputFile);
+        fwrite(0, padding, 1, outputFile);
     }
 
     fclose(outputFile);
@@ -167,7 +165,6 @@ void medianFiltering(PIXEL** rgb, BITMAPINFOHEADER infoHeader, BITMAPFILEHEADER 
 {
     PIXEL** newRGB = malloc(sizeof(PIXEL*) * infoHeader.biHeight);
     unsigned long long padding = (4 - (infoHeader.biWidth * sizeof(PIXEL)) % 4) % 4;
-    unsigned long long paddingSize = padding * sizeof(unsigned char);
 
     for(int i = 0; i < infoHeader.biHeight; i++)
     {
@@ -230,7 +227,7 @@ void medianFiltering(PIXEL** rgb, BITMAPINFOHEADER infoHeader, BITMAPFILEHEADER 
     for(int i = 0; i < infoHeader.biHeight; i++)
     {
         fwrite(newRGB[i], sizeof(PIXEL), infoHeader.biWidth, outputFile);
-        fwrite(0, paddingSize, 1, outputFile);
+        fwrite(0, padding, 1, outputFile);
     }
 
     fclose(outputFile);
@@ -241,7 +238,6 @@ void gammaCorrection(PIXEL** rgb, BITMAPINFOHEADER infoHeader, BITMAPFILEHEADER 
 {
     PIXEL** newRGB = malloc(sizeof(PIXEL*) * infoHeader.biHeight);
     unsigned long long padding = (4 - (infoHeader.biWidth * sizeof(PIXEL)) % 4) % 4;
-    unsigned long long paddingSize = padding * sizeof(unsigned char);
     float gamma;
     printf("Input the gamma coefficient:\n");
     scanf_s("%f", &gamma);
@@ -267,7 +263,7 @@ void gammaCorrection(PIXEL** rgb, BITMAPINFOHEADER infoHeader, BITMAPFILEHEADER 
     for(int i = 0; i < infoHeader.biHeight; i++)
     {
         fwrite(newRGB[i], sizeof(PIXEL), infoHeader.biWidth, outputFile);
-        fwrite(0, paddingSize, 1, outputFile);
+        fwrite(0, padding, 1, outputFile);
     }
 
     fclose(outputFile);
