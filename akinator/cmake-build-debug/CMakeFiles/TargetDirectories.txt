@@ -1,0 +1,3 @@
+C:/Users/bukat/Projects/akinator/cmake-build-debug/CMakeFiles/akinator.dir
+C:/Users/bukat/Projects/akinator/cmake-build-debug/CMakeFiles/edit_cache.dir
+C:/Users/bukat/Projects/akinator/cmake-build-debug/CMakeFiles/rebuild_cache.dir
