@@ -6,7 +6,7 @@
 #include <conio.h>
 #define MAX_QUESTION_LENGTH 100
 #define MAX_NAME_LENGTH 100
-#define MAX_ANSWER_LENGTH 3
+#define MAX_ANSWER_LENGTH 4
 
 typedef struct NODE {
     char* data;

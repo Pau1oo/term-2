@@ -23,8 +23,8 @@ NODE* readTree(FILE *f)
         return NULL;
 
     NODE* node = newNode(data);
-    node->yesAnswer = readTree(f);
     node->noAnswer = readTree(f);
+    node->yesAnswer = readTree(f);
 
     return node;
 }
@@ -37,7 +37,7 @@ void saveTree(NODE* node, FILE *f)
         return;
     }
 
-    fprintf(f, "%s", node->data);
+    fprintf(f, "%s\n", node->data);
     saveTree(node->yesAnswer, f);
     saveTree(node->noAnswer, f);
 }
@@ -61,8 +61,8 @@ NODE* guessCharacter(NODE* node)
 
     if(node->noAnswer == NULL && node->yesAnswer == NULL)
     {
-        fflush(stdin);
         fgets(answer, MAX_ANSWER_LENGTH, stdin);
+        rewind(stdin);
         answer[strcspn(answer, "\n")] = '\0';
 
         if (strcmp(answer, "yes") == 0)
@@ -74,14 +74,15 @@ NODE* guessCharacter(NODE* node)
         {
             printf("I give up. Who is your person?\n");
             char* answerForQuestion = malloc(sizeof(char) * MAX_NAME_LENGTH);
-            fflush(stdin);
+            rewind(stdin);
             fgets(answerForQuestion, MAX_NAME_LENGTH, stdin);
             answerForQuestion[strcspn(answerForQuestion, "\n")] = '\0';
 
-            printf("How can I differ this object?\n");
-            char *mainString = malloc(sizeof(char) * MAX_QUESTION_LENGTH);
-            fflush(stdin);
+            printf("How can I differ this person?\n");
+            char* mainString = malloc(sizeof(char) * MAX_QUESTION_LENGTH);
+            rewind(stdin);
             fgets(mainString, MAX_QUESTION_LENGTH, stdin);
+            rewind(stdin);
             mainString[strcspn(mainString, "\n")] = '\0';
 
             NODE* tempTreeNode = newNode(answerForQuestion);
@@ -94,6 +95,10 @@ NODE* guessCharacter(NODE* node)
     }
     else
     {
+        fgets(answer, MAX_ANSWER_LENGTH, stdin);
+        rewind(stdin);
+        answer[strcspn(answer, "\n")] = '\0';
+
         if (strcmp(answer, "yes") == 0)
         {
             return node->noAnswer;
