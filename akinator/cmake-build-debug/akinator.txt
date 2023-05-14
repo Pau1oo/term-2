@@ -1,5 +1,3 @@
-fGeralt@
-@
-Is your person a witcher
-@
+Does your character have white hair?Is your person a witcher?@@
+Geralt@@
 @

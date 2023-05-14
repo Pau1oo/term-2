@@ -2,26 +2,14 @@
 
 int main()
 {
-    NODE* root = NULL;
     FILE* f = fopen("akinator.txt", "r");
-
     if(f == NULL)
     {
         exit(0);
     }
-
-    root = readTree(f);
+    NODE* root = readTree(f);
     fclose(f);
-
-    guess_character(&root);
-    f = fopen("akinator.txt", "w");
-
-    if(f == NULL)
-    {
-        exit(0);
-    }
-    saveTree(root, f);
-    fclose(f);
+    game(root);
     freeTree(root);
     return 0;
 }

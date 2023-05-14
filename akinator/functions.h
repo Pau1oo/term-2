@@ -6,14 +6,15 @@
 #include <conio.h>
 #define MAX_QUESTION_LENGTH 100
 #define MAX_NAME_LENGTH 100
+#define MAX_ANSWER_LENGTH 3
 
 typedef struct NODE {
     char* data;
-    struct NODE* yes;
-    struct NODE* no;
+    struct NODE* yesAnswer;
+    struct NODE* noAnswer;
 } NODE;
 
-NODE* createNode(char* data);
+NODE* newNode(char* data);
 
 void freeTree(NODE* node);
 
@@ -21,6 +22,8 @@ NODE* readTree(FILE *f);
 
 void saveTree(NODE* node, FILE* f);
 
-NODE* guess_character(NODE** node);
+NODE* guessCharacter(NODE* node);
+
+void game(NODE* root);
 
 #endif //AKINATOR_FUNCTIONS_H
