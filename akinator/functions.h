@@ -8,7 +8,8 @@
 #define MAX_NAME_LENGTH 100
 #define MAX_ANSWER_LENGTH 4
 
-typedef struct NODE {
+typedef struct NODE
+{
     char* data;
     struct NODE* yesAnswer;
     struct NODE* noAnswer;
@@ -22,7 +23,7 @@ NODE* readTree(FILE *f);
 
 void saveTree(NODE* node, FILE* f);
 
-NODE* guessCharacter(NODE* node);
+void guessCharacter(NODE* node);
 
 void game(NODE* root);
 

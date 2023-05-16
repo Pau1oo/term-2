@@ -1,1 +1,79 @@
 Is your person a witcher?
+Is your character the oldest witcher?
+Vesemir
+@
+@
+Is your character Geralt's friend and fellow craftsman?
+Has your character been tested with Herbs together with Geralt?
+Eskel
+@
+@
+Lambert
+@
+@
+Geralt
+@
+@
+Does your person smells of lilac and gooseberries?
+Yennifer
+@
+@
+Does your character have red hair?
+Triss
+@
+@
+Is your character Geralt's horse?
+Plotva
+@
+@
+Can your character travel through time and space?
+Ciri
+@
+@
+Is your character a vampire?
+Regis
+@
+@
+Is your character the king of Temeria?
+Foltest
+@
+@
+Is your character a dryad from Brokilon?
+Milva
+@
+@
+Is your character an officer in the Nilfgaard?
+Cahir Mawr Dyffyn aep Ceallach
+@
+@
+Was your character a spy?
+Dijkstra
+@
+@
+Is your character one of the most powerful magicians?
+Is your person a mysterious elf who helps Ciri?
+Avallach
+@
+@
+Vilgefortz
+@
+@
+Is your character the king of the wild hunt?
+Eredin
+@
+@
+Is your character the queen of Cintra and a grandmother of Ciri?
+Calanthe
+@
+@
+Is your character the Emperor of the Nilfgaardian Empire?
+Emhyr Var Emreis
+@
+@
+Is your character a dwarf?
+Zoltan
+@
+@
+Lutik
+@
+@

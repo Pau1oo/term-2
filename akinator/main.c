@@ -7,6 +7,7 @@ int main()
     {
         exit(0);
     }
+
     NODE* root = readTree(f);
     fclose(f);
     game(root);

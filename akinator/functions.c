@@ -1,45 +1,42 @@
 #include "functions.h"
 
+void saveTree(NODE *node, FILE *f) {
+
+    if (node == NULL) {
+
+        fprintf(f, "@\n");
+        return;
+
+    }
+
+    fprintf(f, "%s", node->data);
+    saveTree(node->yesAnswer, f);
+    saveTree(node->noAnswer, f);
+
+}
+
+NODE* readTree(FILE* f)
+{
+    char data[100];
+    fgets(data, sizeof(data), f);
+    if (data[0] == '@')
+        return NULL;
+
+    NODE *node = newNode(data);
+    node->yesAnswer = readTree(f);
+    node->noAnswer = readTree(f);
+
+    return node;
+}
+
 NODE* newNode(char* data)
 {
     NODE* node = (NODE*)malloc(sizeof(NODE));
-    node->data = data;
+    node->data = strdup(data);
     node->yesAnswer = NULL;
     node->noAnswer = NULL;
 
     return node;
-}
-
-NODE* readTree(FILE *f)
-{
-    char* data = malloc(sizeof(char) * MAX_QUESTION_LENGTH);
-    if(!fgets(data, MAX_QUESTION_LENGTH, f))
-    {
-        return NULL;
-    }
-
-    data[strlen(data) - 1] = '\0';
-    if (strcmp(data, "@") == 0)
-        return NULL;
-
-    NODE* node = newNode(data);
-    node->noAnswer = readTree(f);
-    node->yesAnswer = readTree(f);
-
-    return node;
-}
-
-void saveTree(NODE* node, FILE *f)
-{
-    if (node == NULL)
-    {
-        fprintf(f, "@\n");
-        return;
-    }
-
-    fprintf(f, "%s\n", node->data);
-    saveTree(node->yesAnswer, f);
-    saveTree(node->noAnswer, f);
 }
 
 void freeTree(NODE* node)
@@ -54,79 +51,96 @@ void freeTree(NODE* node)
     }
 }
 
-NODE* guessCharacter(NODE* node)
+char* getStringFromStdin()
 {
-    char *answer;
-    printf("%s (yes/no)\n", node->data);
-
-    if(node->noAnswer == NULL && node->yesAnswer == NULL)
+    int length = 1;
+    char* string = (char *) malloc(length * sizeof(char));
+    for (int i = 0;; i++)
     {
-        fgets(answer, MAX_ANSWER_LENGTH, stdin);
-        rewind(stdin);
-        answer[strcspn(answer, "\n")] = '\0';
-
-        if (strcmp(answer, "yes") == 0)
+        string[i] = (char) getchar();
+        if (string[i] == '\n')
         {
-            printf("I win!");
-            return NULL;
+            string[i] = '\0';
+            break;
+        }
+        length++;
+        string = (char *) realloc(string, length);
+    }
+    return string;
+}
+
+void guessCharacter(NODE *node)
+{
+    printf("%s\n", node->data);
+
+    char* answer = getStringFromStdin();
+    while (strcmp(answer, "yes") != 0 && strcmp(answer, "no") != 0)
+    {
+        printf("Input \"yes\" or \"no\"\n");
+        rewind(stdin);
+        answer = getStringFromStdin();
+    }
+    system("cls");
+
+    if (strcmp(answer, "yes") == 0)
+    {
+        if (node->yesAnswer == NULL)
+        {
+            printf("I win!\n");
+            free(answer);
+            getch();
         }
         else
         {
-            printf("I give up. Who is your person?\n");
-            char* answerForQuestion = malloc(sizeof(char) * MAX_NAME_LENGTH);
-            rewind(stdin);
-            fgets(answerForQuestion, MAX_NAME_LENGTH, stdin);
-            answerForQuestion[strcspn(answerForQuestion, "\n")] = '\0';
-
-            printf("How can I differ this person?\n");
-            char* mainString = malloc(sizeof(char) * MAX_QUESTION_LENGTH);
-            rewind(stdin);
-            fgets(mainString, MAX_QUESTION_LENGTH, stdin);
-            rewind(stdin);
-            mainString[strcspn(mainString, "\n")] = '\0';
-
-            NODE* tempTreeNode = newNode(answerForQuestion);
-            NODE* treeNodeNew = newNode(node->data);
-            node->data = mainString;
-            node->noAnswer = tempTreeNode;
-            node->yesAnswer = treeNodeNew;
-            return NULL;
+            free(answer);
+            guessCharacter(node->yesAnswer);
         }
     }
     else
     {
-        fgets(answer, MAX_ANSWER_LENGTH, stdin);
-        rewind(stdin);
-        answer[strcspn(answer, "\n")] = '\0';
-
-        if (strcmp(answer, "yes") == 0)
+        free(answer);
+        if (node->noAnswer == NULL)
         {
-            return node->noAnswer;
+            printf("I give up. Who is your person?\n");
+            char* newPerson = getStringFromStdin();
+
+            printf("Write a question that differ %s from %s?\n", newPerson, node->data);
+            char* questionForNewPerson = getStringFromStdin();
+            questionForNewPerson = realloc(questionForNewPerson, strlen(questionForNewPerson) + 1);
+            strcat(questionForNewPerson, "\n");
+
+            //printf("What is the answer to the question for %s?\n", newPerson);
+           // char *new_answer = getStringFromStdin();
+
+            NODE* new_node = newNode(questionForNewPerson);
+            free(questionForNewPerson);
+
+            newPerson = realloc(newPerson, strlen(newPerson) + 1);
+            strcat(newPerson, "\n");
+
+            new_node->yesAnswer = newNode(newPerson);
+            new_node->noAnswer = newNode(node->data);
+            free(newPerson);
+            memcpy(node, new_node, sizeof(NODE));
+            free(new_node);
         }
         else
-        {
-            return node->yesAnswer;
-        }
+            guessCharacter(node->noAnswer);
     }
 }
 
 void game(NODE* root)
 {
-    while (1)
+    guessCharacter(root);
+    FILE* f = fopen("akinator.txt", "w");
+    if (f == NULL)
     {
-        NODE* tempRoot = root;
-        do
-        {
-            tempRoot = guessCharacter(tempRoot);
-        } while (tempRoot != NULL);
-
-        FILE* f = fopen("akinator.txt", "w");
-        if (f == NULL)
-        {
-            exit(0);
-        }
-        saveTree(root, f);
-        fclose(f);
-        break;
+        exit(0);
     }
+    saveTree(root, f);
+    fclose(f);
 }
+
+
+
+
