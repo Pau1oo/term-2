@@ -1,18 +1,16 @@
 #include "functions.h"
 
-void saveTree(NODE *node, FILE *f) {
-
-    if (node == NULL) {
-
+void saveTree(NODE *node, FILE *f)
+{
+    if (node == NULL)
+    {
         fprintf(f, "@\n");
         return;
-
     }
 
     fprintf(f, "%s", node->data);
     saveTree(node->yesAnswer, f);
     saveTree(node->noAnswer, f);
-
 }
 
 NODE* readTree(FILE* f)
@@ -108,9 +106,6 @@ void guessCharacter(NODE *node)
             char* questionForNewPerson = getStringFromStdin();
             questionForNewPerson = realloc(questionForNewPerson, strlen(questionForNewPerson) + 1);
             strcat(questionForNewPerson, "\n");
-
-            //printf("What is the answer to the question for %s?\n", newPerson);
-           // char *new_answer = getStringFromStdin();
 
             NODE* new_node = newNode(questionForNewPerson);
             free(questionForNewPerson);
