@@ -126,6 +126,8 @@ void guessCharacter(NODE *node)
 
 void game(NODE* root)
 {
+    LPCWSTR soundFile = (LPCWSTR) "witcher.wav";
+    PlaySound((LPCSTR) soundFile, NULL, SND_FILENAME | SND_ASYNC | SND_LOOP);
     guessCharacter(root);
     FILE* f = fopen("akinator.txt", "w");
     if (f == NULL)
@@ -134,6 +136,7 @@ void game(NODE* root)
     }
     saveTree(root, f);
     fclose(f);
+    PlaySound(NULL, NULL, SND_ASYNC);
 }
 
 

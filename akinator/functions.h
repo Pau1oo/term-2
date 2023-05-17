@@ -4,6 +4,9 @@
 #include <stdlib.h>
 #include <string.h>
 #include <conio.h>
+#include <windows.h>
+#include <tlhelp32.h>
+#include <mmsystem.h>
 #define MAX_QUESTION_LENGTH 100
 #define MAX_NAME_LENGTH 100
 #define MAX_ANSWER_LENGTH 4

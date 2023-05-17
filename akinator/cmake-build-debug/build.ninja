@@ -71,7 +71,7 @@ build CMakeFiles/akinator.dir/functions.c.obj: C_COMPILER__akinator_Debug C$:/Us
 
 build akinator.exe: C_EXECUTABLE_LINKER__akinator_Debug CMakeFiles/akinator.dir/main.c.obj CMakeFiles/akinator.dir/functions.c.obj
   FLAGS = -g
-  LINK_LIBRARIES = -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
+  LINK_LIBRARIES = -lwinmm  -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
   OBJECT_DIR = CMakeFiles\akinator.dir
   POST_BUILD = cd .
   PRE_LINK = cd .
