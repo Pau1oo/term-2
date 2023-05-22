@@ -33,5 +33,7 @@ LRUCache* createLRUCache(int capacity);
 
 void getDomain(LRUCache* cache);
 
+void printCache(LRUCache * cache);
+
 
 #endif //LAB5_FUNCTIONS_H

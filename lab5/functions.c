@@ -217,5 +217,19 @@ void getDomain(LRUCache* cache)
     }
 }
 
+void printCache(LRUCache * cache)
+{
+    for (int i = cache->count - 1; i > 0; i--)
+    {
+        ITEM* item = cache->items[i];
+        if (item != NULL)
+        {
+            printf("%s - %s\n", item->key, item->value);
+        }
+    }
+    printf("\n");
+    getch();
+}
+
 
 

@@ -11,7 +11,7 @@ int main()
         if (choice == 0) exit(0);
 
         else if
-                (choice == 1) ;
+                (choice == 1) printCache(cache);
 
         else if
                 (choice == 2) getDomain(cache);
