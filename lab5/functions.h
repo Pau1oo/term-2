@@ -1,6 +1,6 @@
 #ifndef LAB5_FUNCTIONS_H
 #define LAB5_FUNCTIONS_H
-#define CAPACITY 10
+#define CAPACITY 5
 #define MAX_LENGTH 30
 #define MAX_STRING_SIZE 1024
 #include <stdio.h>

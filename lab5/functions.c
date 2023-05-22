@@ -20,8 +20,8 @@ char* getStringFromStdin()
 
 void displayMenu()
 {
-    printf("[1] Print hash-table\n");
-    printf("[2] Search for a domain in the hash-table\n");
+    printf("[1] Print cache\n");
+    printf("[2] Search for an IP by a domain\n");
     printf("[3] Add domain and IP address to the file\n");
     printf("[4] Search for a domain by IP address\n");
     printf("[0] Exit\n");
@@ -65,7 +65,7 @@ ITEM* createItem(char* key, char* value)
 
 LRUCache* createLRUCache(int capacity)
 {
-    LRUCache* cache = (LRUCache*) malloc (sizeof(LRUCache));
+    LRUCache* cache = (LRUCache*) malloc(sizeof(LRUCache));
 
     if (cache == NULL)
     {
@@ -217,19 +217,17 @@ void getDomain(LRUCache* cache)
     }
 }
 
-void printCache(LRUCache * cache)
+void printCache(LRUCache* cache)
 {
-    for (int i = cache->count - 1; i > 0; i--)
-    {
-        ITEM* item = cache->items[i];
-        if (item != NULL)
-        {
-            printf("%s - %s\n", item->key, item->value);
-        }
-    }
-    printf("\n");
+   ITEM* current = cache->head;
+   while(current!=NULL)
+   {
+       printf("%s - %s\n", current->key, current->value);
+       current = current->next;
+   }
     getch();
 }
+
 
 
 
