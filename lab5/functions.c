@@ -77,8 +77,6 @@ LRUCache* createLRUCache(int capacity)
     cache->count = 0;
     cache->head = NULL;
     cache->tail = NULL;
-    //cache->head->prev = cache->tail;
-    //cache->tail->next = cache->head;
     cache->items = (ITEM**) calloc(cache->capacity, sizeof(ITEM*));
     for (int i = 0; i < capacity; i++)
         cache->items[i] = NULL;
@@ -127,20 +125,45 @@ char* findKeyFromFile(char* key)
     }
 
     char string[MAX_STRING_SIZE];
-    char keyDomain[MAX_LENGTH];
-    char value[MAX_LENGTH];
+    char* keyDomain = malloc(MAX_LENGTH * sizeof(char));
+    char* tempDomain = malloc(MAX_LENGTH * sizeof(char));
+    char* value = malloc(MAX_LENGTH * sizeof(char));
     char* result = NULL;
+    char* type = malloc(MAX_LENGTH * sizeof(char));
 
     while (fgets(string, sizeof(string), file) != NULL)
     {
-        if (sscanf(string, "%255s IN A %255s", keyDomain, value) == 2 && strcmp(keyDomain, key) == 0)
+        if(sscanf(string, "%255s IN %255s %255s", keyDomain, type, value) == 3 && strcmp(keyDomain, key) == 0)
         {
-            result = strdup(value);
-            break;
+            strcpy(tempDomain, key);
+            if(strcmp(type, "A") == 0)
+            {
+                result = strdup(value);
+                break;
+            }
+            else if(strcmp(type, "CNAME") == 0)
+            {
+                rewind(file);
+                strcpy(key, value);
+                while(fgets(string, sizeof(string), file) != NULL)
+                {
+                    if(sscanf(string, "%255s IN %255s %255s", keyDomain, type, value) == 3 && strcmp(keyDomain, key) == 0)
+                    {
+                        strcpy(key, tempDomain);
+                        result = strdup(value);
+                        break;
+                    }
+                }
+            }
         }
     }
 
     fclose(file);
+    free(keyDomain);
+    free(tempDomain);
+    free(value);
+    free(type);
+
     if (result == NULL)
     {
         printf("Domain '%s' doesn't exist in cache nor file.\n", key);
