@@ -251,6 +251,24 @@ void printCache(LRUCache* cache)
     getch();
 }
 
+void addDomainAndIPToTheFile()
+{
+    FILE* file = fopen("DNS.txt", "a");
+    if(file == NULL)
+    {
+        printf("Error opening file!\n");
+        return;
+    }
+
+    printf("Enter the domain you want to add to the file:\n");
+    char* domain = getStringFromStdin();
+    printf("Enter the IP address of this domain:\n");
+    char* ip = getStringFromStdin();
+
+    fprintf(file, "%s IN A %s\n", domain, ip);
+    fclose(file);
+}
+
 
 
 

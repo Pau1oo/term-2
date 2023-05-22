@@ -17,7 +17,7 @@ int main()
                 (choice == 2) getDomain(cache);
 
         else if
-                (choice == 3) ;
+                (choice == 3) addDomainAndIPToTheFile();
 
         else if
                 (choice == 4) ;

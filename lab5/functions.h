@@ -35,5 +35,7 @@ void getDomain(LRUCache* cache);
 
 void printCache(LRUCache * cache);
 
+void addDomainAndIPToTheFile();
+
 
 #endif //LAB5_FUNCTIONS_H
