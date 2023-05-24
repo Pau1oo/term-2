@@ -42,10 +42,6 @@ int validateDuplication(char* key);
 
 void recordingTypeCNAME(int typeOfRecord, FILE* file);
 
-void recordingTypeA(int typeOfRecord, FILE* file);
-
-char* searchIPinCNAME(char* key, FILE* file);
-
-
+void recordingTypeA(FILE* file);
 
 #endif //LAB5_FUNCTIONS_H
