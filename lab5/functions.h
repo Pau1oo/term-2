@@ -40,8 +40,10 @@ void addDomainAndIPToTheFile();
 
 int validateDuplication(char* key);
 
-void recordingTypeCNAME(int typeOfRecord, FILE* file);
+void recordingTypeCNAME(FILE* file);
 
 void recordingTypeA(FILE* file);
+
+int validateIP(const char *ip);
 
 #endif //LAB5_FUNCTIONS_H

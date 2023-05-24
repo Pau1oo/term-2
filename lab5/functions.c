@@ -253,6 +253,39 @@ void printCache(LRUCache* cache)
     getch();
 }
 
+int validateIP(const char *ip)
+{
+    int numFields = 0;
+    int fieldValue = 0;
+    int numDigits = 0;
+
+    while (*ip)
+    {
+        if (*ip == '.')
+        {
+            if (numDigits == 0 || fieldValue > 255)
+                return 0;
+            numFields++;
+            fieldValue = 0;
+            numDigits = 0;
+        }
+        else if (*ip >= '0' && *ip <= '9')
+        {
+            fieldValue = fieldValue * 10 + (*ip - '0');
+            numDigits++;
+        }
+        else
+            return 0;
+
+        ip++;
+    }
+
+    if (numDigits == 0 || fieldValue > 255)
+        return 0;
+
+    return (numFields == 3) ? 1 : 0;
+}
+
 int validateDuplication(char* key)
 {
     FILE* file = fopen("DNS.txt", "r");
@@ -303,11 +336,11 @@ void addDomainAndIPToTheFile()
     else if (typeOfRecord == 2)
     {
         system("cls");
-        recordingTypeCNAME(typeOfRecord, file);
+        recordingTypeCNAME(file);
     }
 }
 
-void recordingTypeCNAME(int typeOfRecord, FILE* file)
+void recordingTypeCNAME(FILE* file)
 {
     printf("Enter the domain you want to add to the file:\n");
     char* domain = getStringFromStdin();
@@ -328,6 +361,13 @@ void recordingTypeCNAME(int typeOfRecord, FILE* file)
     printf("Enter the IP address of domain '%s':\n", secondDomain);
     char* ip = getStringFromStdin();
     system("cls");
+    while(validateIP(ip) == 0)
+    {
+        free(ip);
+        printf("Invalid input!\nTry again:\n");
+        ip = getStringFromStdin();
+        system("cls");
+    }
 
     if (validateDuplication(secondDomain) == 1)
     {
@@ -358,6 +398,13 @@ void recordingTypeA(FILE* file)
     printf("Enter the IP address of this domain:\n");
     char* ip = getStringFromStdin();
     system("cls");
+    while(validateIP(ip) == 0)
+    {
+        free(ip);
+        printf("Invalid input!\nTry again:\n");
+        ip = getStringFromStdin();
+        system("cls");
+    }
 
     fprintf(file, "%s IN A %s\n", domain, ip);
     fclose(file);
