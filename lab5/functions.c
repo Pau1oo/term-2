@@ -41,6 +41,7 @@ int menu()
         displayMenu();
         rewind(stdin);
     }
+    system("cls");
     return choice;
 }
 
@@ -233,6 +234,7 @@ void getDomain(LRUCache* cache)
 {
     printf("Input a domain:\n");
     char* key = getStringFromStdin();
+    system("cls");
     if (key != NULL)
     {
         get(cache, key);
@@ -251,6 +253,31 @@ void printCache(LRUCache* cache)
     getch();
 }
 
+int validateDuplication(char* key)
+{
+    FILE* file = fopen("DNS.txt", "r");
+    if (file == NULL)
+    {
+        printf("Error opening file.\n");
+        return ERROR_OPENING;
+    }
+
+    char string[MAX_STRING_SIZE];
+    char* keyDomain = malloc(MAX_LENGTH * sizeof(char));
+    char* value = malloc(MAX_LENGTH * sizeof(char));
+    char* type = malloc(MAX_LENGTH * sizeof(char));
+
+    while (fgets(string, sizeof(string), file) != NULL)
+    {
+        if(sscanf(string, "%255s IN %255s %255s", keyDomain, type, value) == 3 && strcmp(keyDomain, key) == 0)
+        {
+            return 1;
+        }
+    }
+
+    return 0;
+}
+
 void addDomainAndIPToTheFile()
 {
     FILE* file = fopen("DNS.txt", "a");
@@ -260,10 +287,95 @@ void addDomainAndIPToTheFile()
         return;
     }
 
+    printf("What type of record to file do you want?\n[1] IN A\n[2] IN CNAME\n");
+    int typeOfRecord;
+    while(scanf_s("%d", &typeOfRecord) != 1 || typeOfRecord > 2 || typeOfRecord < 1 || getchar() != '\n')
+    {
+        system("cls");
+        printf("Invalid input!\nTry again:\n");
+    }
+
+    if (typeOfRecord == 1)
+    {
+        system("cls");
+        recordingTypeA(typeOfRecord, file);
+    }
+    else if (typeOfRecord == 2)
+    {
+        system("cls");
+        recordingTypeCNAME(typeOfRecord, file);
+    }
+}
+
+void recordingTypeCNAME(int typeOfRecord, FILE* file)
+{
     printf("Enter the domain you want to add to the file:\n");
     char* domain = getStringFromStdin();
+    system("cls");
+
+    while(validateDuplication(domain) == 1)
+    {
+        printf("Duplication detected!\nTry again:\n");
+        free(domain);
+        domain = getStringFromStdin();
+        system("cls");
+    }
+
+    printf("Enter the second domain:\n");
+    char* secondDomain = getStringFromStdin();
+    system("cls");
+
+    if (validateDuplication(secondDomain) == 1)
+    {
+        fprintf(file, "%s IN CNAME %s\n", domain, secondDomain);
+        fclose(file);
+        return;
+    }
+
+    printf("Do you want to continue recording type 'IN CNAME'? (1 - yes/2 - no)\n");
+    int answer;
+    while(scanf_s("%d", &answer) != 1 || answer > 2 || answer < 1 || getchar() != '\n')
+    {
+        system("cls");
+        printf("Invalid input!\nTry again:\n");
+    }
+
+    if(answer == 1)
+    {
+        system("cls");
+        fprintf(file, "%s IN CNAME %s\n", domain, secondDomain);
+        recordingTypeCNAME(typeOfRecord, file);
+    }
+    else if (answer == 2)
+    {
+        system("cls");
+        printf("Enter the IP address of domain '%s':\n", secondDomain);
+        char* ip = getStringFromStdin();
+        system("cls");
+
+        fprintf(file, "%s IN CNAME %s\n", domain, secondDomain);
+        fprintf(file, "%s IN A %s\n", secondDomain, ip);
+        fclose(file);
+    }
+}
+
+void recordingTypeA(int typeOfRecord, FILE* file)
+{
+    printf("Enter the domain you want to add to the file:\n");
+    char* domain = getStringFromStdin();
+    system("cls");
+
+    while(validateDuplication(domain) == 1)
+    {
+        printf("Duplication detected!\nTry again:\n");
+        free(domain);
+        domain = getStringFromStdin();
+        system("cls");
+    }
+
     printf("Enter the IP address of this domain:\n");
     char* ip = getStringFromStdin();
+    system("cls");
 
     fprintf(file, "%s IN A %s\n", domain, ip);
     fclose(file);

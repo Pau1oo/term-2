@@ -1,5 +1,6 @@
 #ifndef LAB5_FUNCTIONS_H
 #define LAB5_FUNCTIONS_H
+#define ERROR_OPENING 5
 #define CAPACITY 5
 #define MAX_LENGTH 30
 #define MAX_STRING_SIZE 1024
@@ -36,6 +37,13 @@ void getDomain(LRUCache* cache);
 void printCache(LRUCache * cache);
 
 void addDomainAndIPToTheFile();
+
+int validateDuplication(char* key);
+
+void recordingTypeCNAME(int typeOfRecord, FILE* file);
+
+void recordingTypeA(int typeOfRecord, FILE* file);
+
 
 
 #endif //LAB5_FUNCTIONS_H
