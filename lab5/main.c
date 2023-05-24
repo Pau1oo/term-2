@@ -14,13 +14,14 @@ int main()
                 (choice == 1) printCache(cache);
 
         else if
-                (choice == 2) getDomain(cache);
+                (choice == 2)
+            getIP(cache);
 
         else if
                 (choice == 3) addDomainAndIPToTheFile();
 
         else if
-                (choice == 4) ;
+                (choice == 4) getDomain();
 
         printf("\n");
     }

@@ -172,3 +172,6 @@ hgtechdirectory.com IN CNAME 2hgtechdirectory.com
 2hgtechdirectory.com IN A 103.102.221.255
 oo.com IN A 22.209.11.5
 ddrfvv IN A 22.44.101.190
+vk.com IN A 132.43.56.255
+gh IN CNAME jk
+jk IN A 12.12.12.12

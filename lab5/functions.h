@@ -32,7 +32,7 @@ ITEM* createItem(char* key, char* value);
 
 LRUCache* createLRUCache(int capacity);
 
-void getDomain(LRUCache* cache);
+void getIP(LRUCache* cache);
 
 void printCache(LRUCache * cache);
 
@@ -45,5 +45,7 @@ void recordingTypeCNAME(FILE* file);
 void recordingTypeA(FILE* file);
 
 int validateIP(const char *ip);
+
+void getDomain();
 
 #endif //LAB5_FUNCTIONS_H

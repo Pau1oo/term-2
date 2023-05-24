@@ -230,7 +230,7 @@ void get(LRUCache* cache, char* key)
     }
 }
 
-void getDomain(LRUCache* cache)
+void getIP(LRUCache* cache)
 {
     printf("Input a domain:\n");
     char* key = getStringFromStdin();
@@ -408,4 +408,49 @@ void recordingTypeA(FILE* file)
 
     fprintf(file, "%s IN A %s\n", domain, ip);
     fclose(file);
+}
+
+void getDomain()
+{
+    FILE* file = fopen("DNS.txt", "r");
+    if (file == NULL)
+    {
+        printf("Error opening file.\n");
+        return;
+    }
+
+    char string[MAX_STRING_SIZE];
+    char* keyDomain = malloc(MAX_LENGTH * sizeof(char));
+    char* tempDomain = malloc(MAX_LENGTH * sizeof(char));
+    char* value = malloc(MAX_LENGTH * sizeof(char));
+    char* type = malloc(MAX_LENGTH * sizeof(char));
+
+    printf("Enter the IP address:\n");
+    char* ip = getStringFromStdin();
+    system("cls");
+    while(validateIP(ip) == 0)
+    {
+        free(ip);
+        printf("Invalid input!\nTry again:\n");
+        ip = getStringFromStdin();
+        system("cls");
+    }
+
+    while(fgets(string, sizeof(string), file) != NULL)
+    {
+        if(sscanf(string, "%255s IN A %255s", keyDomain, value) == 2 && strcmp(value, ip) == 0)
+        {
+            strcpy(tempDomain, keyDomain);
+            rewind(file);
+            while(fgets(string, sizeof(string), file) != NULL)
+            {
+                if(sscanf(string, "%255s IN CNAME %255s", keyDomain, value) == 2 && strcmp(tempDomain, value) == 0)
+                {
+                    printf("%s - %s\n", keyDomain, ip);
+                    printf("%s - %s\n", tempDomain, ip);
+                    getch();
+                }
+            }
+        }
+    }
 }
