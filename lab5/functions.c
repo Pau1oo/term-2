@@ -116,6 +116,26 @@ void updateLRUCache(LRUCache* cache, ITEM* item)
     addToFront(cache, item);
 }
 
+char* searchIPinCNAME(char* key, FILE* file)
+{
+    char string[MAX_STRING_SIZE];
+    char* keyDomain = malloc(MAX_LENGTH * sizeof(char));
+    char* value = malloc(MAX_LENGTH * sizeof(char));
+    char* type = malloc(MAX_LENGTH * sizeof(char));
+    rewind(file);
+    while(fgets(string, sizeof(string), file) != NULL)
+    {
+        if(sscanf(string, "%255s IN %255s %255s", keyDomain, type, value) == 3 && strcmp(keyDomain, key) == 0)
+        {
+            if(strcmp(type, "CNAME") == 0)
+                searchIPinCNAME(value, file);
+            else if (strcmp(type, "A") == 0)
+                return value;
+        }
+    }
+    //return value;
+}
+
 char* findKeyFromFile(char* key)
 {
     FILE* file = fopen("DNS.txt", "r");
@@ -144,17 +164,8 @@ char* findKeyFromFile(char* key)
             }
             else if(strcmp(type, "CNAME") == 0)
             {
-                rewind(file);
-                strcpy(key, value);
-                while(fgets(string, sizeof(string), file) != NULL)
-                {
-                    if(sscanf(string, "%255s IN %255s %255s", keyDomain, type, value) == 3 && strcmp(keyDomain, key) == 0)
-                    {
-                        strcpy(key, tempDomain);
-                        result = strdup(value);
-                        break;
-                    }
-                }
+                strcpy(tempDomain, value);
+                result = searchIPinCNAME(tempDomain, file);
             }
         }
     }
@@ -380,7 +391,3 @@ void recordingTypeA(int typeOfRecord, FILE* file)
     fprintf(file, "%s IN A %s\n", domain, ip);
     fclose(file);
 }
-
-
-
-
