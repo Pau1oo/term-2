@@ -410,7 +410,7 @@ void recordingTypeA(FILE* file)
     fclose(file);
 }
 
-void getDomain()
+void getDomain(LRUCache* cache)
 {
     FILE* file = fopen("DNS.txt", "r");
     if (file == NULL)
@@ -422,8 +422,8 @@ void getDomain()
     char string[MAX_STRING_SIZE];
     char* keyDomain = malloc(MAX_LENGTH * sizeof(char));
     char* tempDomain = malloc(MAX_LENGTH * sizeof(char));
+    char* result = NULL;
     char* value = malloc(MAX_LENGTH * sizeof(char));
-    char* type = malloc(MAX_LENGTH * sizeof(char));
 
     printf("Enter the IP address:\n");
     char* ip = getStringFromStdin();
@@ -440,17 +440,33 @@ void getDomain()
     {
         if(sscanf(string, "%255s IN A %255s", keyDomain, value) == 2 && strcmp(value, ip) == 0)
         {
+            printf("%s - %s\n", keyDomain, ip);
+            put(cache, keyDomain, ip);
             strcpy(tempDomain, keyDomain);
+            result = strdup(keyDomain);
             rewind(file);
             while(fgets(string, sizeof(string), file) != NULL)
             {
                 if(sscanf(string, "%255s IN CNAME %255s", keyDomain, value) == 2 && strcmp(tempDomain, value) == 0)
                 {
                     printf("%s - %s\n", keyDomain, ip);
-                    printf("%s - %s\n", tempDomain, ip);
-                    getch();
+                    put(cache, keyDomain, ip);
                 }
             }
         }
     }
+
+    fclose(file);
+    free(keyDomain);
+    free(value);
+
+    if (result == NULL)
+    {
+        printf("IP '%s' doesn't exist in cache nor file.\n", ip);
+        getch();
+        free(tempDomain);
+        return;
+    }
+    getch();
 }
+

@@ -46,6 +46,6 @@ void recordingTypeA(FILE* file);
 
 int validateIP(const char *ip);
 
-void getDomain();
+void getDomain(LRUCache* cache);
 
 #endif //LAB5_FUNCTIONS_H
