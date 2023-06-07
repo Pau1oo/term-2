@@ -15,6 +15,7 @@ typedef struct ITEM
     char* value;
     struct ITEM* prev;
     struct ITEM* next;
+    struct ITEM* nextCollision;
 } ITEM;
 
 typedef struct LRUCache
